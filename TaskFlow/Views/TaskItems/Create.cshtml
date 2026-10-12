@@ -1,0 +1,131 @@
+
+@model TaskFlow.Models.TaskItem
+
+@{
+    ViewData["Title"] = "Neue Aufgabe erstellen";
+}
+
+<div class="container py-4">
+
+    <!-- Kopfbereich -->
+    <div class="mb-4">
+        <a asp-action="Index" class="text-decoration-none text-secondary">
+            &larr; Zurück zur Aufgabenübersicht
+        </a>
+
+        <h1 class="h2 fw-bold mt-3 mb-2">Neue Aufgabe erstellen</h1>
+        <p class="text-secondary mb-0">
+            Erstelle eine neue Aufgabe und lege ihre Priorität und ihren Status fest.
+        </p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-9 col-xl-8">
+
+            <div class="card border-0 shadow-sm">
+
+                <!-- Kopfbereich der Karte -->
+                <div class="card-header bg-white border-bottom p-4">
+                    <h2 class="h5 fw-bold mb-1">Aufgabendetails</h2>
+                    <p class="text-secondary small mb-0">
+                        Fülle die folgenden Felder aus.
+                    </p>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form asp-action="Create" method="post">
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="alert alert-danger"
+                             role="alert"></div>
+
+                        <!-- Titel -->
+                        <div class="mb-4">
+                            <label asp-for="Title" class="form-label fw-semibold"></label>
+                            <input asp-for="Title"
+                                   class="form-control"
+                                   placeholder="z. B. Projektdokumentation erstellen" />
+                            <span asp-validation-for="Title" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Beschreibung -->
+                        <div class="mb-4">
+                            <label asp-for="Description" class="form-label fw-semibold"></label>
+                            <textarea asp-for="Description"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Beschreibe die Aufgabe genauer..."></textarea>
+                            <div class="form-text">
+                                Optional – maximal 500 Zeichen.
+                            </div>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Priorität und Status -->
+                        <div class="row g-3 mb-4">
+
+                            <div class="col-12 col-md-6">
+                                <label asp-for="Priority" class="form-label fw-semibold"></label>
+                                <select asp-for="Priority"
+                                        class="form-select"
+                                        asp-items="Html.GetEnumSelectList<TaskFlow.Models.TaskPriority>()">
+                                </select>
+                                <span asp-validation-for="Priority" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label asp-for="Status" class="form-label fw-semibold"></label>
+                                <select asp-for="Status"
+                                        class="form-select"
+                                        asp-items="Html.GetEnumSelectList<TaskFlow.Models.TaskStatus>()">
+                                </select>
+                                <span asp-validation-for="Status" class="text-danger small"></span>
+                            </div>
+
+                        </div>
+
+                        <!-- Fälligkeitsdatum -->
+                        <div class="mb-4">
+                            <label asp-for="DueDate" class="form-label fw-semibold"></label>
+                            <input asp-for="DueDate"
+                                   type="date"
+                                   class="form-control" />
+                            <div class="form-text">
+                                Das Fälligkeitsdatum ist optional.
+                            </div>
+                            <span asp-validation-for="DueDate" class="text-danger small"></span>
+                        </div>
+
+                        <hr class="my-4" />
+
+                        <!-- Schaltflächen -->
+                        <div class="d-flex flex-column flex-sm-row justify-content-end gap-2">
+                            <a asp-action="Index"
+                               class="btn btn-outline-secondary px-4">
+                                Abbrechen
+                            </a>
+
+                            <button type="submit" class="btn btn-primary px-4">
+                                Aufgabe erstellen
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+            <p class="text-secondary small mt-3 mb-0">
+                Felder mit Validierungsfehlern werden nach dem Absenden gekennzeichnet.
+            </p>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

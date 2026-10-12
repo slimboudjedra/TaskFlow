@@ -1,0 +1,234 @@
+﻿
+@{
+    ViewData["Title"] = "Startseite";
+}
+
+<!-- Hero Section -->
+<section class="bg-body-tertiary rounded-4 p-4 p-md-5 mb-5">
+    <div class="container-fluid py-3 py-md-4">
+        <div class="row align-items-center g-5">
+
+            <!-- Texte principal -->
+            <div class="col-12 col-lg-7">
+                <span class="badge rounded-pill text-bg-primary mb-3 px-3 py-2">
+                    Einfach. Klar. Produktiv.
+                </span>
+
+                <h1 class="display-4 fw-bold lh-sm mb-4">
+                    Bring deine Aufgaben
+                    <span class="text-primary">in den Flow.</span>
+                </h1>
+
+                <p class="lead text-body-secondary mb-4">
+                    Plane deinen Tag, setze Prioritäten und behalte den Überblick.
+                    Mit TaskFlow organisierst du deine Aufgaben einfach und effizient
+                    an einem Ort.
+                </p>
+
+                <div class="d-flex flex-column flex-sm-row gap-3">
+                    <a asp-controller="TaskItems"
+                       asp-action="Index"
+                       class="btn btn-primary btn-lg">
+                        Aufgaben entdecken
+                        <i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+
+                    <a href="#funktionen"
+                       class="btn btn-outline-secondary btn-lg">
+                        Funktionen entdecken
+                    </a>
+                </div>
+
+                <div class="d-flex flex-wrap align-items-center gap-3 mt-4 text-body-secondary small">
+                    <span>
+                        <i class="bi bi-check-circle-fill text-success me-1"></i>
+                        Einfach zu bedienen
+                    </span>
+                    <span>
+                        <i class="bi bi-check-circle-fill text-success me-1"></i>
+                        Klare Prioritäten
+                    </span>
+                </div>
+            </div>
+
+            <!-- Visuelle Vorschau -->
+            <div class="col-12 col-lg-5">
+                <div class="card border-0 shadow-lg rounded-4">
+                    <div class="card-body p-4">
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <span class="text-body-secondary small">DEIN ÜBERBLICK</span>
+                                <h2 class="h4 fw-bold mb-0 mt-1">Mein Arbeitstag</h2>
+                            </div>
+                            <span class="rounded-circle bg-primary-subtle text-primary p-3">
+                                <i class="bi bi-calendar-check fs-4"></i>
+                            </span>
+                        </div>
+
+                        <!-- Tâche 1 -->
+                        <div class="border rounded-3 p-3 mb-3">
+                            <div class="d-flex justify-content-between align-items-start gap-2">
+                                <div>
+                                    <h3 class="h6 fw-semibold mb-2">
+                                        Projektplanung abschließen
+                                    </h3>
+                                    <span class="badge text-bg-danger">Hohe Priorität</span>
+                                </div>
+                                <i class="bi bi-circle text-body-secondary fs-5"></i>
+                            </div>
+                            <div class="progress mt-3" style="height: 5px;">
+                                <div class="progress-bar" role="progressbar"
+                                     style="width: 65%;"
+                                     aria-valuenow="65" aria-valuemin="0"
+                                     aria-valuemax="100"></div>
+                            </div>
+                        </div>
+
+                        <!-- Tâche 2 -->
+                        <div class="border rounded-3 p-3 mb-3">
+                            <div class="d-flex justify-content-between align-items-start gap-2">
+                                <div>
+                                    <h3 class="h6 fw-semibold mb-2">
+                                        Aufgabenliste aktualisieren
+                                    </h3>
+                                    <span class="badge text-bg-primary">In Bearbeitung</span>
+                                </div>
+                                <i class="bi bi-arrow-repeat text-primary fs-5"></i>
+                            </div>
+                        </div>
+
+                        <!-- Tâche 3 -->
+                        <div class="border rounded-3 p-3">
+                            <div class="d-flex justify-content-between align-items-start gap-2">
+                                <div>
+                                    <h3 class="h6 fw-semibold mb-2">
+                                        Wochenziele überprüfen
+                                    </h3>
+                                    <span class="badge text-bg-success">Erledigt</span>
+                                </div>
+                                <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-primary border-0 mt-4 mb-0 d-flex align-items-center gap-2">
+                            <i class="bi bi-lightbulb fs-4"></i>
+                            <span class="small">
+                                Ein klarer Plan schafft Raum für das Wesentliche.
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Fonctionnalités -->
+<section id="funktionen" class="py-4 py-md-5 mb-5">
+    <div class="text-center mb-5">
+        <span class="text-primary fw-semibold text-uppercase small">
+            Deine Vorteile
+        </span>
+
+        <h2 class="display-6 fw-bold mt-2">
+            Alles, was du für deine Aufgaben brauchst
+        </h2>
+
+        <p class="text-body-secondary mx-auto mt-3" style="max-width: 650px;">
+            Weniger Chaos, mehr Struktur. TaskFlow hilft dir dabei,
+            organisiert zu bleiben und dich auf das Wesentliche zu konzentrieren.
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Fonctionnalité 1 -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <div class="rounded-3 bg-primary-subtle text-primary d-inline-flex align-items-center justify-content-center p-3 mb-4">
+                        <i class="bi bi-list-check fs-3"></i>
+                    </div>
+
+                    <h3 class="h5 fw-bold mb-3">
+                        Aufgaben organisieren
+                    </h3>
+
+                    <p class="text-body-secondary mb-0">
+                        Erstelle Aufgaben, ergänze Beschreibungen und verwalte
+                        alles übersichtlich an einem zentralen Ort.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fonctionnalité 2 -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <div class="rounded-3 bg-warning-subtle text-warning-emphasis d-inline-flex align-items-center justify-content-center p-3 mb-4">
+                        <i class="bi bi-flag fs-3"></i>
+                    </div>
+
+                    <h3 class="h5 fw-bold mb-3">
+                        Prioritäten setzen
+                    </h3>
+
+                    <p class="text-body-secondary mb-0">
+                        Erkenne, welche Aufgaben besonders wichtig sind,
+                        und plane deine Zeit gezielter.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fonctionnalité 3 -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <div class="rounded-3 bg-success-subtle text-success d-inline-flex align-items-center justify-content-center p-3 mb-4">
+                        <i class="bi bi-graph-up-arrow fs-3"></i>
+                    </div>
+
+                    <h3 class="h5 fw-bold mb-3">
+                        Fortschritt im Blick
+                    </h3>
+
+                    <p class="text-body-secondary mb-0">
+                        Behalte den Status deiner Aufgaben im Auge und
+                        erkenne, was bereits erledigt ist.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Appel à l'action -->
+<section class="bg-primary text-white rounded-4 p-4 p-md-5 mb-4">
+    <div class="row align-items-center g-4">
+        <div class="col-12 col-lg-8">
+            <h2 class="h2 fw-bold mb-3">
+                Bereit, produktiver zu arbeiten?
+            </h2>
+
+            <p class="mb-0 text-white-50">
+                Starte jetzt, bring Struktur in deinen Alltag und verwalte
+                deine Aufgaben mit TaskFlow.
+            </p>
+        </div>
+
+        <div class="col-12 col-lg-4 text-lg-end">
+            <a asp-controller="TaskItems"
+               asp-action="Create"
+               class="btn btn-light btn-lg text-primary fw-semibold">
+                <i class="bi bi-plus-circle me-2"></i>
+                Erste Aufgabe erstellen
+            </a>
+        </div>
+    </div>
+</section>

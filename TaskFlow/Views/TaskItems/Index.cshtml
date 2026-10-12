@@ -1,0 +1,287 @@
+
+@model IEnumerable<TaskFlow.Models.TaskItem>
+
+@{
+    ViewData["Title"] = "Aufgabenübersicht";
+
+    var tasks = Model?.ToList() ?? new List<TaskFlow.Models.TaskItem>();
+
+    var totalTasks = tasks.Count;
+    var openTasks = tasks.Count(t => t.Status == TaskFlow.Models.TaskStatus.Todo);
+    var inProgressTasks = tasks.Count(t => t.Status == TaskFlow.Models.TaskStatus.InProgress);
+    var completedTasks = tasks.Count(t => t.Status == TaskFlow.Models.TaskStatus.Done);
+
+    var selectedStatus = Context.Request.Query["status"].ToString();
+    var selectedPriority = Context.Request.Query["priority"].ToString();
+}
+
+<div class="container-fluid py-4">
+
+    <!-- Kopfbereich -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div>
+            <h1 class="h2 fw-bold mb-2">Aufgabenübersicht</h1>
+            <p class="text-secondary mb-0">
+                Behalte deine Aufgaben und Fortschritte im Blick.
+            </p>
+        </div>
+
+        <a asp-action="Create" class="btn btn-primary px-4 py-2">
+            <span class="me-1" aria-hidden="true">＋</span>
+            Neue Aufgabe erstellen
+        </a>
+    </div>
+
+    <!-- Statistiken -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <div class="text-secondary small mb-2">Angezeigte Aufgaben</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fs-2 fw-bold">@totalTasks</span>
+                        <span class="badge text-bg-primary rounded-pill">Gesamt</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <div class="text-secondary small mb-2">Zu erledigen</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fs-2 fw-bold">@openTasks</span>
+                        <span class="badge text-bg-secondary rounded-pill">Offen</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <div class="text-secondary small mb-2">In Bearbeitung</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fs-2 fw-bold">@inProgressTasks</span>
+                        <span class="badge text-bg-info rounded-pill">Aktiv</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <div class="text-secondary small mb-2">Erledigt</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fs-2 fw-bold">@completedTasks</span>
+                        <span class="badge text-bg-success rounded-pill">Fertig</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Filter -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-white border-bottom py-3">
+            <h2 class="h5 fw-bold mb-1">Aufgaben filtern</h2>
+            <p class="text-secondary small mb-0">
+                Filtere Aufgaben nach Status und Priorität.
+            </p>
+        </div>
+
+        <div class="card-body p-4">
+            <form asp-action="Index" method="get">
+                <div class="row g-3 align-items-end">
+
+                    <div class="col-12 col-md-4">
+                        <label for="status" class="form-label fw-semibold">Status</label>
+                        <select name="status" id="status" class="form-select">
+                            <option value="">Alle Status</option>
+
+                            @foreach (var item in Html.GetEnumSelectList<TaskFlow.Models.TaskStatus>())
+                            {
+                                <option value="@item.Value"
+                                        selected="@(item.Value == selectedStatus ? "selected" : null)">
+                                    @item.Text
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <label for="priority" class="form-label fw-semibold">Priorität</label>
+                        <select name="priority" id="priority" class="form-select">
+                            <option value="">Alle Prioritäten</option>
+
+                            @foreach (var item in Html.GetEnumSelectList<TaskFlow.Models.TaskPriority>())
+                            {
+                                <option value="@item.Value"
+                                        selected="@(item.Value == selectedPriority ? "selected" : null)">
+                                    @item.Text
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <div class="d-flex flex-wrap gap-2">
+                            <button type="submit" class="btn btn-primary px-4">
+                                Filtern
+                            </button>
+
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                Zurücksetzen
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Aufgabentabelle -->
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-header bg-white border-bottom py-3">
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2">
+                <div>
+                    <h2 class="h5 fw-bold mb-1">Alle Aufgaben</h2>
+                    <p class="text-secondary small mb-0">
+                        @totalTasks Aufgabe(n) in der aktuellen Ansicht
+                    </p>
+                </div>
+
+                <span class="badge text-bg-light border text-dark">
+                    @totalTasks Einträge
+                </span>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+
+                <thead class="table-light">
+                    <tr>
+                        <th class="px-3 py-3">@Html.DisplayNameFor(model => model.Title)</th>
+                        <th class="py-3">@Html.DisplayNameFor(model => model.Description)</th>
+                        <th class="py-3">@Html.DisplayNameFor(model => model.Priority)</th>
+                        <th class="py-3">@Html.DisplayNameFor(model => model.Status)</th>
+                        <th class="py-3">@Html.DisplayNameFor(model => model.DueDate)</th>
+                        <th class="py-3 text-end pe-3">Aktionen</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (tasks.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <div class="fs-5 fw-semibold mb-2">Keine Aufgaben gefunden</div>
+                                <p class="text-secondary mb-3">
+                                    Passe deine Filter an oder erstelle eine neue Aufgabe.
+                                </p>
+                                <a asp-action="Create" class="btn btn-primary">
+                                    Neue Aufgabe erstellen
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in tasks)
+                        {
+                            <tr>
+                                <td class="px-3">
+                                    <span class="fw-semibold">@item.Title</span>
+                                </td>
+
+                                <td>
+                                    <span class="text-secondary">
+                                        @(string.IsNullOrWhiteSpace(item.Description)
+                                            ? "Keine Beschreibung"
+                                            : item.Description)
+                                    </span>
+                                </td>
+
+                                <td>
+                                    @switch (item.Priority)
+                                    {
+                                        case TaskFlow.Models.TaskPriority.High:
+                                            <span class="badge text-bg-danger">Hoch</span>
+                                            break;
+
+                                        case TaskFlow.Models.TaskPriority.Normal:
+                                            <span class="badge text-bg-primary">Normal</span>
+                                            break;
+
+                                        case TaskFlow.Models.TaskPriority.Low:
+                                            <span class="badge text-bg-secondary">Niedrig</span>
+                                            break;
+                                    }
+                                </td>
+
+                                <td>
+                                    @switch (item.Status)
+                                    {
+                                        case TaskFlow.Models.TaskStatus.Todo:
+                                            <span class="badge text-bg-secondary">Zu erledigen</span>
+                                            break;
+
+                                        case TaskFlow.Models.TaskStatus.InProgress:
+                                            <span class="badge text-bg-info">In Bearbeitung</span>
+                                            break;
+
+                                        case TaskFlow.Models.TaskStatus.Done:
+                                            <span class="badge text-bg-success">Erledigt</span>
+                                            break;
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (item.DueDate.HasValue)
+                                    {
+                                        <span>@item.DueDate.Value.ToString("dd.MM.yyyy")</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-secondary">–</span>
+                                    }
+                                </td>
+
+                                <td class="text-end pe-3">
+                                    <div class="d-inline-flex flex-wrap justify-content-end gap-1">
+                                        <a asp-action="Edit"
+                                           asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-primary">
+                                            Bearbeiten
+                                        </a>
+
+                                        <a asp-action="Details"
+                                           asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-secondary">
+                                            Details
+                                        </a>
+
+                                        <a asp-action="Delete"
+                                           asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-danger">
+                                            Löschen
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</div>

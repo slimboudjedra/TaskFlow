@@ -1,0 +1,155 @@
+
+@model TaskFlow.Models.TaskItem
+
+@{
+    ViewData["Title"] = "Aufgabendetails";
+}
+
+<div class="container py-4">
+
+    <!-- En-tête -->
+    <div class="mb-4">
+        <a asp-action="Index" class="text-decoration-none text-secondary">
+            &larr; Zurück zur Aufgabenübersicht
+        </a>
+
+        <h1 class="h2 fw-bold mt-3 mb-2">Aufgabendetails</h1>
+        <p class="text-secondary mb-0">
+            Hier findest du alle Informationen zu dieser Aufgabe.
+        </p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-9 col-xl-8">
+
+            <div class="card border-0 shadow-sm">
+
+                <!-- En-tête de la carte -->
+                <div class="card-header bg-white border-bottom p-4">
+                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+                        <div>
+                            <h2 class="h5 fw-bold mb-1">@Model.Title</h2>
+                            <span class="text-secondary small">
+                                Aufgaben-ID: #@Model.Id
+                            </span>
+                        </div>
+
+                        <a asp-action="Edit"
+                           asp-route-id="@Model.Id"
+                           class="btn btn-primary">
+                            Aufgabe bearbeiten
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contenu -->
+                <div class="card-body p-4">
+
+                    <h3 class="h6 fw-bold text-secondary mb-3">
+                        Allgemeine Informationen
+                    </h3>
+
+                    <dl class="row mb-0">
+
+                        <dt class="col-sm-4 text-secondary mb-2">
+                            @Html.DisplayNameFor(model => model.Title)
+                        </dt>
+                        <dd class="col-sm-8 fw-semibold mb-4">
+                            @Model.Title
+                        </dd>
+
+                        <dt class="col-sm-4 text-secondary mb-2">
+                            @Html.DisplayNameFor(model => model.Description)
+                        </dt>
+                        <dd class="col-sm-8 mb-4">
+                            @if (!string.IsNullOrWhiteSpace(Model.Description))
+                            {
+                                @Model.Description
+                            }
+                            else
+                            {
+                                <span class="text-secondary fst-italic">
+                                    Keine Beschreibung vorhanden
+                                </span>
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4 text-secondary mb-2">
+                            @Html.DisplayNameFor(model => model.Priority)
+                        </dt>
+                        <dd class="col-sm-8 mb-4">
+                            @switch (Model.Priority)
+                            {
+                                case TaskFlow.Models.TaskPriority.High:
+                                    <span class="badge text-bg-danger">Hoch</span>
+                                    break;
+
+                                case TaskFlow.Models.TaskPriority.Normal:
+                                    <span class="badge text-bg-primary">Normal</span>
+                                    break;
+
+                                case TaskFlow.Models.TaskPriority.Low:
+                                    <span class="badge text-bg-secondary">Niedrig</span>
+                                    break;
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4 text-secondary mb-2">
+                            @Html.DisplayNameFor(model => model.Status)
+                        </dt>
+                        <dd class="col-sm-8 mb-4">
+                            @switch (Model.Status)
+                            {
+                                case TaskFlow.Models.TaskStatus.Todo:
+                                    <span class="badge text-bg-secondary">Zu erledigen</span>
+                                    break;
+
+                                case TaskFlow.Models.TaskStatus.InProgress:
+                                    <span class="badge text-bg-info">In Bearbeitung</span>
+                                    break;
+
+                                case TaskFlow.Models.TaskStatus.Done:
+                                    <span class="badge text-bg-success">Erledigt</span>
+                                    break;
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4 text-secondary mb-2">
+                            @Html.DisplayNameFor(model => model.DueDate)
+                        </dt>
+                        <dd class="col-sm-8 mb-0">
+                            @if (Model.DueDate.HasValue)
+                            {
+                                @Model.DueDate.Value.ToString("dd.MM.yyyy")
+                            }
+                            else
+                            {
+                                <span class="text-secondary fst-italic">
+                                    Kein Fälligkeitsdatum festgelegt
+                                </span>
+                            }
+                        </dd>
+
+                    </dl>
+                </div>
+
+                <!-- Actions -->
+                <div class="card-footer bg-white border-top p-3">
+                    <div class="d-flex flex-column flex-sm-row justify-content-end gap-2">
+                        <a asp-action="Index"
+                           class="btn btn-outline-secondary">
+                            Zurück zur Liste
+                        </a>
+
+                        <a asp-action="Edit"
+                           asp-route-id="@Model.Id"
+                           class="btn btn-primary">
+                            Bearbeiten
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
